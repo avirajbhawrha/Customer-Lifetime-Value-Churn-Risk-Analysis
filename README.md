@@ -6,7 +6,7 @@ An end-to-end data analytics project that identifies high-risk customers and qua
 Customer churn directly impacts recurring revenue, and not all churn carries equal weight — losing a high-CLTV customer costs far more than losing a low-value one. This project analyzes a relational customer database to: 
 - Identify the key drivers behind customer churn
 - Predict churn risk using a classification model
-- - Segment customers by combining **Customer Lifetime Value (CLTV)** and **churn probability**
+- Segment customers by combining **Customer Lifetime Value (CLTV)** and **churn probability**
 - Prioritize retention efforts toward high-value, high-risk customers
 - Present findings through an interactive Power BI dashboard ---
 ---
