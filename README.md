@@ -12,7 +12,7 @@ Customer churn directly impacts recurring revenue, and not all churn carries equ
 ---
 ## Dataset
 - The data is stored in a normalized **SQLite database** with three related tables, joined on customerid:
--  | Table | Description | |---|---|
+-  | Table | Description |
 -  | db_customer | Customer demographics — name, country, state, gender, date of birth, interests |
 -  |db_subscription | Subscription details — plan type, contract type, monthly charges, renewal/cancellation dates, cancellation reason, CLTV, churn score |
 _  | db_support | Support interactions — complaint dates, escalations, CSAT scores, comments |
