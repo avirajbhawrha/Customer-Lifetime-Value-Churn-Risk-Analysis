@@ -4,7 +4,7 @@ A data analysis project that explores customer churn using SQLite data on custom
 
 ## Project Status
 
-🚧 **Work in progress** — this notebook is incomplete. The data cleaning, merging, feature engineering, and KPI sections are functional, but the visualization section has an unresolved bug (a column name mismatch — `monthly_charge` vs `monthly_charges` — in the Seaborn `catplot` call), and the final cell is empty/unfinished.
+🚧 **Work in progress** — this notebook is incomplete. The data cleaning, merging, feature engineering, and KPI sections are functional, but the visualization section has an unresolved bug (a column name mismatch — `monthly_charge` vs `monthly_charges` — in the Seaborn `catplot` call), and the final cell is empty/unfinished. Pivot table analysis, pandas-based SQL querying, and a written data insights summary are still to be added — see [Known Issues / TODO](#known-issues--todo).
 
 ## Overview
 
@@ -85,6 +85,9 @@ The notebook computes the following business metrics:
 
 - [ ] Fix column name typo (`monthly_charge` → `monthly_charges`) in the final `catplot` visualization
 - [ ] Complete the visualization section
+- [ ] Add pivot table analysis in pandas (e.g. `pivot_table`) to summarize churn across multiple dimensions (plan type, state, gender, contract type)
+- [ ] Add SQL-style querying in pandas (e.g. `pandasql` / direct SQL joins and aggregations) as an alternative view of the KPIs
+- [ ] Write up data insights and key findings/conclusions from the analysis
 - [ ] Add a churn prediction model (currently only descriptive/diagnostic analysis is present)
 - [ ] Add markdown documentation/commentary for KPI interpretation
 - [ ] Clean up leftover/duplicate exploratory cells
