@@ -1,43 +1,90 @@
+# Customer Churn Risk Analysis
 
-# Customer Lifetime Value & Churn Risk Analysis 
-An end-to-end data analytics project that identifies high-risk customers and quantifies revenue at risk by combining customer demographics, subscription, and support data. The project covers SQL-based data extraction, feature engineering, churn prediction modeling, and an interactive Power BI dashboard for retention strategy.
----
-## Project Overview
-Customer churn directly impacts recurring revenue, and not all churn carries equal weight — losing a high-CLTV customer costs far more than losing a low-value one. This project analyzes a relational customer database to: 
-- Identify the key drivers behind customer churn
-- Predict churn risk using a classification model
-- Segment customers by combining **Customer Lifetime Value (CLTV)** and **churn probability**
-- Prioritize retention efforts toward high-value, high-risk customers
-- Present findings through an interactive Power BI dashboard ---
----
-## Dataset
-- The data is stored in a normalized **SQLite database** with three related tables, joined on customerid:
--  | Table | Description |
--  | db_customer | Customer demographics — name, country, state, gender, date of birth, interests |
--  |db_subscription | Subscription details — plan type, contract type, monthly charges, renewal/cancellation dates, cancellation reason, CLTV, churn score |
-_  | db_support | Support interactions — complaint dates, escalations, CSAT scores, comments |
-## Tech Stack 
-- **SQL** — data extraction and table joins from the relational database
-- **Python (Pandas, NumPy)** — data cleaning and feature engineering -
-- **Scikit-learn** — churn classification model -
-- **Power BI** — interactive dashboard and visualization -
-- **SQLite** — source database
----
-## Project Workflow 
-1. **Data Extraction** — Queried and joined customer, subscription, and support tables via SQL
-2. **Data Cleaning** — Handled missing values, standardized date formats, resolved inconsistent categorical entries
-3. **Feature Engineering** — Derived customer tenure, complaint counts, escalation flags, and CLTV bands
-4. **Exploratory Data Analysis** — Examined churn patterns across contract type, plan tier, and support activity
-5. **Churn Prediction Model** — Built a classification model to estimate churn probability per customer
-6. **Customer Segmentation** — Combined CLTV and churn risk into priority tiers for retention targeting
-7. **Dashboard** — Visualized churn rate by segment, revenue at risk, and support-to-churn correlation in Power BI
- ---
+A data analysis project that explores customer churn using SQLite data on customer demographics, subscriptions, and support interactions. The notebook cleans and merges three raw tables, engineers churn-related features, computes key business KPIs, and visualizes churn patterns.
 
- ## Key Insights 
-*(Update with your actual results once analysis is complete)*
-- Identified **X%** of customers contributing **Y%** of at-risk revenue
-- Achieved **X%** accuracy / **X** AUC score in predicting churn
-- Flagged **X** high-CLTV customers with elevated churn risk for retention targeting
-- Found that **[contract type / support escalations / etc.]** was the strongest predictor of churn
----
+## Project Status
 
+🚧 **Work in progress** — this notebook is incomplete. The data cleaning, merging, feature engineering, and KPI sections are functional, but the visualization section has an unresolved bug (a column name mismatch — `monthly_charge` vs `monthly_charges` — in the Seaborn `catplot` call), and the final cell is empty/unfinished.
+
+## Overview
+
+The analysis pulls customer, subscription, and support data from a SQLite database (`customer_churn.db`), cleans and standardizes it, merges it into a single analytical table, and derives churn insights such as retention rate, revenue at risk, and escalation impact on churn.
+
+## Data Sources
+
+The project reads from `customer_churn.db`, which contains three tables:
+
+| Table | Description | Key Columns |
+|---|---|---|
+| `db_customer` | Customer demographics | `customerid`, `name`, `country`, `state`, `gender`, `dob`, `interests`, `pincode` |
+| `db_subscription` | Subscription & billing details | `customerid`, `subscription_start_date`, `subscription_type`, `renewal_date`, `plan_type`, `contract_type`, `cancellation_date`, `cancellation_reason`, `monthly_charges`, `cltv`, `churn_score` |
+| `db_support` | Customer support interactions | `customerid`, `complaint_date`, `escalations`, `csat_score`, `comment` |
+
+## Workflow
+
+### 1. Data Cleaning
+- Renamed the `name` column in the customer table
+- Dropped low-value columns (`interests`, `pincode`)
+- Converted `dob` to a proper datetime type
+- Standardized inconsistent gender labels (e.g. `Men` → `Male`)
+- Handled missing `country` values
+- Cleaned date columns in the subscription table
+- Removed unnecessary columns (`col_1`, `comment`) from the support table and parsed `complaint_date`
+- Deduplicated the support table to one record per customer (keeping the most recent complaint)
+
+### 2. Feature Engineering & Merging
+- Engineered a customer complaint count feature
+- Merged the customer, subscription, and support tables into a single analytical dataframe
+- Exported the merged dataset to `exported_churn_data.csv`
+- Derived features including `Tenure_days`, `churn_risk`, and `cancellation_month`
+
+### 3. KPI Analysis
+The notebook computes the following business metrics:
+- **Churn rate** and **retention rate**
+- **Churn by plan type** and **by state**
+- **Average Revenue Per User (ARPU)**
+- **Average customer tenure**
+- **Revenue at risk** (revenue lost from churned customers)
+- **Escalation rate** and average complaints per user
+- **Correlation between escalations and churn**
+- A derived **churn risk** classification (based on `churn_score`)
+
+### 4. Visualization
+- Monthly churn trend (time series)
+- Correlation heatmap of encoded features
+- Pairplot of key numeric features
+- Churn breakdown by plan type, gender, and risk category (⚠️ currently failing due to a column name typo)
+
+## Tech Stack
+
+- **Python 3.13**
+- `pandas`, `numpy` — data manipulation
+- `sqlite3` — database access
+- `matplotlib`, `seaborn` — visualization
+- Jupyter Notebook
+
+## Project Structure
+
+```
+.
+├── Churn_Risk_Analysis_incomplete.ipynb   # Main analysis notebook
+├── customer_churn.db                      # SQLite source database (not included)
+└── exported_churn_data.csv                # Cleaned & merged dataset (generated by notebook)
+```
+
+## Getting Started
+
+1. Ensure `customer_churn.db` is in the same directory as the notebook.
+2. Install dependencies:
+   ```bash
+   pip install pandas numpy matplotlib seaborn
+   ```
+3. Run the notebook cells in order (top to bottom) in Jupyter.
+
+## Known Issues / TODO
+
+- [ ] Fix column name typo (`monthly_charge` → `monthly_charges`) in the final `catplot` visualization
+- [ ] Complete the visualization section
+- [ ] Add a churn prediction model (currently only descriptive/diagnostic analysis is present)
+- [ ] Add markdown documentation/commentary for KPI interpretation
+- [ ] Clean up leftover/duplicate exploratory cells
