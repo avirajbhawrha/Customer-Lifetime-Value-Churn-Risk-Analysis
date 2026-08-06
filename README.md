@@ -47,7 +47,7 @@ The notebook computes the following business metrics:
 - **Revenue at risk** (revenue lost from churned customers)
 - **Escalation rate** and average complaints per user
 - **Correlation between escalations and churn**
-- A derived **churn risk** classification (based on `churn_score`)
+- A derived **churn risk** classification ((based on `churn_score`))
 
 ### 4. Visualization
 - Monthly churn trend (time series)
