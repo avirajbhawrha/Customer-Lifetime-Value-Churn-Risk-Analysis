@@ -63,7 +63,7 @@ The notebook computes the following business metrics:
 - `matplotlib`, `seaborn` — visualization
 - Jupyter Notebook
 
-## Project Structure
+## Project Structure...
 
 ```
 .
